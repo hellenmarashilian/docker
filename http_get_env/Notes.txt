@@ -1,0 +1,3 @@
+To run:
+
+docker run -e user_name=name -p 8000:8000 senceck/http_get_env:v1

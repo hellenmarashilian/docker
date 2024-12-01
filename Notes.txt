@@ -1,0 +1,9 @@
+Image:
+Definition: A Docker image is a lightweight, standalone, and immutable file that contains everything needed to run a piece of software: code, runtime, libraries, environment variables, and configurations.
+State: Static and read-only.
+Purpose: It serves as a template or blueprint for creating containers.
+
+Container:
+Definition: A Docker container is a running instance of a Docker image. It represents an isolated environment where the application runs.
+State: Dynamic and can change during runtime (e.g., logs, temporary files).
+Purpose: It is the live execution of an image, capable of being started, stopped, and interacted with.
