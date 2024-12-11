@@ -1,14 +1,21 @@
-def GIT_REPO_URL = 'https://github.com/hellenmarashilian/docker.git' // Public GitHub repo URL
-def GIT_BRANCH = 'main' // Branch to clone
-def DOCKER_REGISTRY = '192.168.1.157:8083/repository/hellz-docker' // Nexus repository URL
-def IMAGE_NAME = 'http_get' // Docker image name
-def IMAGE_TAG = 'latest' // Docker image tag
-def NEXUS_USERNAME = 'admin' // Nexus username
-def NEXUS_PASSWORD = '2188' // Nexus password
+def git_repo_url = 'https://github.com/hellenmarashilian/docker.git' // Public GitHub repo URL
+def git_branch = 'main' // Branch to clone
+def docker_registry = '192.168.1.157:8083/repository/hellz-docker' // Nexus repository URL
+def image_name = 'http_get' // Docker image name
+def image_tag = 'latest' // Docker image tag
+def nexus_username = 'admin' // Nexus username
+def nexus_password = '2188' // Nexus password
+
 node {
-  def map = [GIT_REPO_URL:GIT_REPO_URL, GIT_BRANCH:GIT_BRANCH, DOCKER_REGISTRY:DOCKER_REGISTRY, IMAGE_NAME:IMAGE_NAME, IMAGE_TAG:IMAGE_TAG, NEXUS_USERNAME:NEXUS_USERNAME, NEXUS_PASSWORD:NEXUS_PASSWORD]
-//def buildScript = load 'build.groovy'
-//buildScript(map)
-  load 'build.groovy'
-  build(map)
+    stage('Checkout Code') {
+        echo 'Cloning repository...'
+        git branch: 'main', url: 'https://github.com/hellenmarashilian/docker.git'
+    }
+
+    stage('Run Build Script') {
+        echo 'Running build.groovy script...'
+        // Load the build.groovy script from the correct path (assumes it's in the root directory)
+        def buildScript = load 'build.groovy'
+        buildScript([GIT_REO_URL: git_repo_url, GIT_BRANCH: git_branch, DOCKER_REGISTERY: docker_registry, IMAGE_NAME: image_name, IMAGE_TAG: image_tag, NEXUS_USERNAME: nexus_username, NEXUS_PASSWORD: nexus_password])
+    }
 }
