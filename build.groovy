@@ -4,6 +4,7 @@ def call(Map input_values){
   def map_to_apply=default_values+input_values
 
 pipeline {
+  agent any
   stages{
     stage('Checkout Code') {
         echo 'Cloning repository...'
