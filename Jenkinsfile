@@ -16,7 +16,7 @@ node {
         echo 'Loading build.groovy script...'
         // Load the build.groovy script from the correct path (assumes it's in the root directory)
         def buildScript = load 'build.groovy'
-        if (builScript == null){
+        if (buildScript == null){
             echo 'buildscript in null'
         }
         echo 'Calling build script...'
