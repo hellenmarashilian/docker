@@ -6,6 +6,8 @@ def image_tag = 'latest' // Docker image tag
 def nexus_username = 'admin' // Nexus username
 def nexus_password = '2188' // Nexus password
 def map = [git_repo_url: git_repo_url, git_branch: git_branch, docker_registry: docker_registry, image_name: image_name, image_tag: image_tag, nexus_username: nexus_username, nexus_password: nexus_password]
-getfiles()
+node{
+  getfiles()
+}
 //gf(map)
 
