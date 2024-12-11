@@ -11,12 +11,15 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps{
+                script{
                 echo 'Cloning repository...'
                 git branch: 'main', url: 'https://github.com/hellenmarashilian/docker.git'
+                }
             }
         }
         stage('Run Build Script') {
             steps{
+                script{
                 echo 'Loading build.groovy script...'
                 // Load the build.groovy script from the correct path (assumes it's in the root directory)
                 bat 'dir'
@@ -27,6 +30,7 @@ pipeline {
                 echo 'Calling build script...'
                 def map = [git_repo_url: git_repo_url, git_branch: git_branch, docker_registry: docker_registry, image_name: image_name, image_tag: image_tag, nexus_username: nexus_username, nexus_password: nexus_password]
                 buildScript.building(map)
+                }
             }
         }
     }
