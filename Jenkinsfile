@@ -6,4 +6,5 @@ def IMAGE_TAG = 'latest' // Docker image tag
 def NEXUS_USERNAME = 'admin' // Nexus username
 def NEXUS_PASSWORD = '2188' // Nexus password
 def map = [GIT_REPO_URL:GIT_REPO_URL, GIT_BRANCH:GIT_BRANCH, DOCKER_REGISTRY:DOCKER_REGISTRY, IMAGE_NAME:IMAGE_NAME, IMAGE_TAG:IMAGE_TAG, NEXUS_USERNAME:NEXUS_USERNAME, NEXUS_PASSWORD:NEXUS_PASSWORD]
-build(map)
+def buildScript = load 'build.groovy'
+buildScript(map)
