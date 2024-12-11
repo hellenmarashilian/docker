@@ -1,6 +1,4 @@
-// build.groovy
-
-def building(Map input_values) {
+def call(Map input_values) {
     def default_values = [
         GIT_REPO_URL: 'https://github.com/hellenmarashilian/docker.git',
         GIT_BRANCH: 'main',
