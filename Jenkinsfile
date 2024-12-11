@@ -7,7 +7,9 @@ def nexus_username = 'admin' // Nexus username
 def nexus_password = '2188' // Nexus password
 
 pipeline {
-    agent any
+    agent{
+        any
+    }
     stages {
         stage('Checkout Code') {
             steps{
