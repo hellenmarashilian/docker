@@ -15,7 +15,7 @@ node {
     stage('Run Build Script') {
         echo 'Running build.groovy script...'
         // Load the build.groovy script from the correct path (assumes it's in the root directory)
-        def buildScript = load 'build.groovy'
+        def buildScript = load './build.groovy'
         buildScript([git_repo_url: git_repo_url, git_branch: git_branch, docker_registry: docker_registry, image_name: image_name, image_tag: image_tag, nexus_username: nexus_username, nexus_password: nexus_password])
     }
 }
