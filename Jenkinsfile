@@ -15,6 +15,7 @@ node {
     stage('Run Build Script') {
         echo 'Loading build.groovy script...'
         // Load the build.groovy script from the correct path (assumes it's in the root directory)
+        bat 'dir'
         def buildScript = load "build.groovy"
         if (buildScript == null){
             echo 'buildscript is null'
