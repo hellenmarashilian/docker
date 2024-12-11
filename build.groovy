@@ -1,6 +1,6 @@
 // build.groovy
 
-def call(Map map_to_apply) {
+def building(Map map_to_apply) {
 //    def default_values = [
  //       GIT_REPO_URL: 'https://github.com/hellenmarashilian/docker.git',
   //      GIT_BRANCH: 'main',
