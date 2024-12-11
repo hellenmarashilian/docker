@@ -1,7 +1,4 @@
 // build.groovy
-def print(String word){
- echo word
-}
 
 def building(Map map_to_apply) {
 //    def default_values = [
@@ -50,3 +47,4 @@ def building(Map map_to_apply) {
         }
     }
 }
+return this
