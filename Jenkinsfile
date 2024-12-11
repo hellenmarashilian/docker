@@ -9,7 +9,7 @@ node {
     echo 'Loading getfiles.groovy...'
     def loadrepo = load 'getfiles.groovy'
     echo "loadrepo is: ${loadrepo}"
-    loadrepo.call()
+    //loadrepo.call()
     def map = [git_repo_url: git_repo_url, git_branch: git_branch, docker_registry: docker_registry, image_name: image_name, image_tag: image_tag, nexus_username: nexus_username, nexus_password: nexus_password]
     echo 'Loading getfiles.groovy...'
     def push = load 'gf.groovy'
