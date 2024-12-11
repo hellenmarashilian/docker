@@ -1,41 +1,48 @@
-def call(Map input_values){
+def call(Map input_values) {
+    def default_values = [
+        git_repo_url: git_repo_url, 
+        git_branch: git_branch, 
+        docker_registry: docker_registry, 
+        image_name: image_name, 
+        image_tag: image_tag, 
+        nexus_username: nexus_username, 
+        nexus_password: nexus_password
+    ]
+    def map_to_apply = default_values + input_values
 
-  def default_values= [GIT_REPO_URL:GIT_REPO_URL, GIT_BRANCH:GIT_BRANCH, DOCKER_REGISTRY:DOCKER_REGISTRY, IMAGE_NAME:IMAGE_NAME, IMAGE_TAG:IMAGE_TAG, NEXUS_USERNAME:NEXUS_USERNAME, NEXUS_PASSWORD:NEXUS_PASSWORD]
-  def map_to_apply=default_values+input_values
+    pipeline {
+        agent any
+        stages {
+            stage('Checkout Code') {
+                steps {
+                    script {
+                        echo 'Cloning repository...'
+                        git branch: map_to_apply.git_branch, url: map_to_apply.git_repo_url
+                    }
+                }
+            }
 
-pipeline {
-  agent any
-  stages{
-    stage('Checkout Code') {
-      steps{
-        script{
-          echo 'Cloning repository...'
-          git branch: GIT_BRANCH, url: GIT_REPO_URL
+            stage('Build Docker Image') {
+                steps {
+                    script {
+                        echo 'Building Docker image...'
+                        bat "docker build -t ${map_to_apply.image_name}:${map_to_apply.image_tag} ./${map_to_apply.image_name}"
+                    }
+                }
+            }
+
+            stage('Push to Nexus Repository') {
+                steps {
+                    script {
+                        echo 'Pushing Docker image to Nexus...'
+                        bat """
+                            docker login ${map_to_apply.docker_registry} -u ${map_to_apply.nexus_username} -p ${map_to_apply.nexus_password}
+                            docker tag ${map_to_apply.image_name}:${map_to_apply.image_tag} ${map_to_apply.docker_registry}/${map_to_apply.image_name}:${map_to_apply.image_tag}
+                            docker push ${map_to_apply.docker_registry}/${map_to_apply.image_name}:${map_to_apply.image_tag}
+                        """
+                    }
+                }
+            }
         }
-      }
     }
-
-    stage('Build Docker Image') {
-      steps{
-        script{
-          echo 'Building Docker image...'
-          bat "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ./${IMAGE_NAME}"
-        }
-      }
-    }
-
-    stage('Push to Nexus Repository') {
-      steps{
-        script{
-          echo 'Pushing Docker image to Nexus...'
-          bat """
-              docker login ${DOCKER_REGISTRY} -u ${NEXUS_USERNAME} -p ${NEXUS_PASSWORD}
-              docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}
-              docker push ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}
-          """
-        }
-      }
-    }
-  }
-}  
 }
