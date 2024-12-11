@@ -6,7 +6,7 @@ def call(){
             steps{
                 script{
                 echo 'Cloning repository...'
-                git branch: 'main', url: 'https://github.com/hellenmarashilian/docker.git'
+                //git branch: 'main', url: 'https://github.com/hellenmarashilian/docker.git'
                 }
             }
         }
