@@ -10,21 +10,24 @@ pipeline {
     agent any
     stages {
         stage('Checkout Code') {
-            echo 'Cloning repository...'
-            git branch: 'main', url: 'https://github.com/hellenmarashilian/docker.git'
-        }
-
-        stage('Run Build Script') {
-            echo 'Loading build.groovy script...'
-            // Load the build.groovy script from the correct path (assumes it's in the root directory)
-            bat 'dir'
-            def buildScript = load "build.groovy"
-            if (buildScript == null){
-                echo 'buildscript is null'
+            steps{
+                echo 'Cloning repository...'
+                git branch: 'main', url: 'https://github.com/hellenmarashilian/docker.git'
             }
-            echo 'Calling build script...'
-            def map = [git_repo_url: git_repo_url, git_branch: git_branch, docker_registry: docker_registry, image_name: image_name, image_tag: image_tag, nexus_username: nexus_username, nexus_password: nexus_password]
-            buildScript.building(map)
+        }
+        stage('Run Build Script') {
+            steps{
+                echo 'Loading build.groovy script...'
+                // Load the build.groovy script from the correct path (assumes it's in the root directory)
+                bat 'dir'
+                def buildScript = load "build.groovy"
+                if (buildScript == null){
+                    echo 'buildscript is null'
+                }
+                echo 'Calling build script...'
+                def map = [git_repo_url: git_repo_url, git_branch: git_branch, docker_registry: docker_registry, image_name: image_name, image_tag: image_tag, nexus_username: nexus_username, nexus_password: nexus_password]
+                buildScript.building(map)
+            }
         }
     }
 }
